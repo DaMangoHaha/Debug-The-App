@@ -16,30 +16,28 @@ public class CongratScript : MonoBehaviour
 
     void Start()
     {
-        // Initialize the list before using it
         TextToDisplay = new List<string>();
 
         TimeToNextText = 0.0f;
         CurrentText = 0;
-        RotatingSpeed = 1.0f;
+        RotatingSpeed = 60.0f; // degrees per second
 
-        TextToDisplay.Add("Congratulations!");
-        TextToDisplay.Add("All Errors Fixed!");
+        TextToDisplay.Add("Congratulations");
+        TextToDisplay.Add("All Errors Fixed");
 
-        // Make sure references exist before using them
         if (Text != null)
             Text.text = TextToDisplay[0];
-        else
-            Debug.LogError("Text reference not assigned in the Inspector!");
 
         if (SparksParticles != null)
             SparksParticles.Play();
-        else
-            Debug.LogError("SparksParticles reference not assigned in the Inspector!");
     }
 
     void Update()
     {
+        // Rotate the text continuously
+        if (Text != null)
+            Text.transform.Rotate(Vector3.up * RotatingSpeed * Time.deltaTime);
+
         TimeToNextText += Time.deltaTime;
 
         if (TimeToNextText > 1.5f)
